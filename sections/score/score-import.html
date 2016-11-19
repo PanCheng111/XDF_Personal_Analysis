@@ -1,0 +1,59 @@
+<template class="task-template">
+  <section id="score-import-section" class="section js-section u-category-menu">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
+          导入学生答题情况
+        </h1>
+        <h3> 在本页面导入 <code>Excel</code> 格式（xls/xlsx）的学生答题情况。</h3>
+
+        <p>需要给出本次考试中每个题目的分数，包括选择题、计算题、解答题等等。大题需要给出每个小问的得分，以便生成每位考生的个性化分析结果。</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">Excel格式要求
+          <div class="demo-meta u-avoid-clicks">支持: xls, xlsx </div>
+        </button>
+        <div class="demo-box">
+          <p>这里给出对导入文件的格式示例，只有满足如下示例的Excel文件才能被本应用正确识别。</p>
+          <table class="table">
+            <tr>
+              <td>姓名</td><td>选择题错题号</td><td>16（1）</td><td>16（2）</td><td>17</td><td>18（1）</td>
+            </tr>
+            <tr>
+              <td>张三</td><td>3,5,6,8</td><td>5</td><td>6</td><td>12</td><td>0</td>
+            </tr>
+            <tr>
+              <td>李四</td><td>1,2,3,4</td><td>6</td><td>6</td><td>8</td><td>6</td>
+            </tr>
+          </table>
+          <p>注：凡是出现逗号处，均使用英文逗号。
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">导入Excel数据
+          <div class="demo-meta u-avoid-clicks">支持: xls, xlsx </div>
+        </button>
+        <div class="demo-box">
+          <div class="demo-controls">
+            <button class="demo-button" id="select-score-import">点我导入数据</button>
+            <span class="demo-response is-selectable" id="selected-score-import-file"></span>
+          </div>
+          <p>这里给出对导入文件的格式示例，只有满足如下示例的Excel文件才能被本应用正确识别。</p>
+          <div id = 'displayed-score-import-file'> </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/score/score-import');
+    </script>
+
+  </section>
+</template>

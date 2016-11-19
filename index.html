@@ -14,6 +14,18 @@
 
   <link rel="import" href="sections/about.html">
   <link rel="import" href="sections/windows/windows.html">
+
+  <link rel="import" href="sections/exam/exam-import.html">
+  <link rel="import" href="sections/exam/exam-manual.html">
+  <link rel="import" href="sections/score/score-import.html">
+  <link rel="import" href="sections/score/score-manual.html">
+  <link rel="import" href="sections/subject/subject-import.html">
+  <link rel="import" href="sections/subject/subject-manual.html">
+  <link rel="import" href="sections/sentence/sentence-import.html">
+  <link rel="import" href="sections/sentence/sentence-manual.html">
+  <link rel="import" href="sections/analysis/analysis-generate.html">
+  <link rel="import" href="sections/analysis/analysis-query.html">
+
   <link rel="import" href="sections/windows/crash-hang.html">
   <link rel="import" href="sections/menus/menus.html">
   <link rel="import" href="sections/menus/shortcuts.html">
@@ -31,10 +43,12 @@
 
   <nav class="nav js-nav">
     <header class="nav-header">
-      <h1 class="nav-title">Electron <strong>API 文档</strong></h1>
+      <h1 class="nav-title">新东方 <strong>成绩分析系统</strong></h1>
       <svg class="nav-header-icon"><use xlink:href="assets/img/icons.svg#icon-electron"></use></svg>
     </header>
 
+
+<!--
     <div class="nav-item u-category-windows">
       <h5 class="nav-category">
         <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-windows"></use></svg>
@@ -43,16 +57,55 @@
       <button type="button" id="button-windows" data-section="windows" class="nav-button">创建并管理 <em>窗口</em></button>
       <button type="button" id="button-crash-hang" data-section="crash-hang" class="nav-button">处理窗口<em>崩溃和挂机</em></button>
     </div>
+-->
+
+    <div class="nav-item u-category-windows">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-windows"></use></svg>
+        考题
+      </h5>
+      <button type="button" id="button-exam-import" data-section="exam-import" class="nav-button">导入本次 <em>考试数据</em></button>
+      <button type="button" id="button-exam-manual" data-section="exam-manual" class="nav-button">直接录入 <em>考试数据</em></button>
+    </div>
 
     <div class="nav-item u-category-menu">
       <h5 class="nav-category">
         <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
-        菜单
+        分数
       </h5>
-      <button type="button" id="button-menus" data-section="menus" class="nav-button">自定义 <em>菜单</em> </button>
-      <button type="button" id="button-shortcuts" data-section="shortcuts" class="nav-button">配置 <em>快捷键</em></button>
+      <button type="button" id="button-score-import" data-section="score-import" class="nav-button">导入学生 <em>答题情况</em> </button>
+      <button type="button" id="button-score-manual" data-section="score-manual" class="nav-button">录入学生 <em>答题情况</em></button>
     </div>
 
+
+    <div class="nav-item u-category-system">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-system"></use></svg>
+        题库
+      </h5>
+      <button type="button" id="button-subject-import" data-section="subject-import" class="nav-button">导入对应 <em>知识点题库</em> </button>
+      <button type="button" id="button-subject-manual" data-section="subject-manual" class="nav-button">录入对应 <em>知识点题库</em></button>
+    </div>
+
+    <div class="nav-item u-category-communication">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-communication"></use></svg>
+        话术
+      </h5>
+      <button type="button" id="button-sentence-import" data-section="sentence-import" class="nav-button">导入相应 <em>总结话术</em> </button>
+      <button type="button" id="button-sentence-manual" data-section="sentence-manual" class="nav-button">录入相应 <em>总结话术</em></button>
+    </div>
+
+    <div class="nav-item u-category-native-ui">
+      <h5 class="nav-category">
+        <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-native-ui"></use></svg>
+        分析
+      </h5>
+      <button type="button" id="button-analysis-generate" data-section="analysis-generate" class="nav-button">生成学生 <em>个性化分析</em> </button>
+      <button type="button" id="button-analysis-query" data-section="analysis-query" class="nav-button">查询学生 <em>个性化分析</em></button>
+    </div>
+
+    <!--
     <div class="nav-item u-category-native-ui">
       <h5 class="nav-category">
         <svg class="nav-icon"><use xlink:href="assets/img/icons.svg#icon-native-ui"></use></svg>
@@ -88,10 +141,11 @@
       <button type="button" id="button-pdf" data-section="pdf" class="nav-button"><em>保存</em> 为 PDF</button>
       <button type="button" id="button-desktop-capturer" data-section="desktop-capturer" class="nav-button">界面 <em>截图</em></button>
     </div>
+    -->
 
     <footer class="nav-footer">
       <button type="button" id="button-about" data-modal="about" class="nav-footer-button">关于</button>
-      <a class="nav-footer-logo" href="https://github.com/fuchao2012" aria-label="Homepage">
+      <a class="nav-footer-logo" href="https://github.com/PanCheng111" aria-label="Homepage">
         <svg class="nav-footer-icon"><use xlink:href="assets/img/icons.svg#icon-love"></use></svg>
       </a>
     </footer>

@@ -1,0 +1,96 @@
+<template class="task-template">
+  <section id="analysis-generate-section" class="section js-section u-category-native-ui">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-native-ui"></use></svg>
+          生成所有考生的个性化分析
+        </h1>
+        <h3> 在本页面导出 <code>MS Word</code> 格式（docx）的考生个性化成绩分析单。</h3>
+
+        <p>根据以上导入的考试数据和学生得分情况，分析出每位考生各自个性化分析单，更精细准确找出学生存在的问题。</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">Word格式样式
+          <div class="demo-meta u-avoid-clicks">支持: doc, docx </div>
+        </button>
+        <div class="demo-box">
+          <p>本应用导出的word文档是如下格式：</p>
+          <table class="table">
+            <tr>
+              <td colspan="6" text-align="left">基本信息</td>
+            </tr>
+            <tr>
+              <td>姓名</td><td>张三</td><td>成绩</td><td>90</td><td colspan="2" rowspan="3">照片</td>
+            </tr>
+            <tr>
+              <td>排名</td><td>1</td><td>最高分</td><td>90</td>
+            </tr>
+            <tr>
+              <td colspan="2">与最高分差距</td><td colspan="2">0</td>
+            </tr>
+
+            <tr>
+              <td colspan="6" text-align="left">错题分析</td>
+            </tr>
+            <tr>
+              <td >题号</td><td colspan="2">班级正确率</td><td colspan="3">知识点分析</td>
+            </tr>
+            <tr>
+              <td >2</td><td colspan="2">0.78</td><td colspan="3">力的分解</td>
+            </tr>
+            <tr>
+              <td >5</td><td colspan="2">0.5</td><td colspan="3">质量守恒</td>
+            </tr>
+
+             <tr>
+              <td colspan="6" text-align="left">分析结果</td>
+            </tr>
+            <tr>
+              <td colspan="2">题型</td><td colspan="4">总结</td>
+            </tr>
+            <tr>
+              <td colspan="2" text-align="right">选择题</td><td colspan="4">孩子做的选择题较好。</td>
+            </tr>
+            <tr>
+              <td colspan="2" text-align="right">大题</td><td colspan="4">孩子做的大题需要改进。</td>
+            </tr>
+            <tr>
+              <td colspan="2" >总分</td><td colspan="4">孩子做的总分还不错。</td>
+            </tr>
+            <tr>
+              <td colspan="2" >解决方案</td><td colspan="4">XXXXX</td>
+            </tr>
+            <tr>
+              <td colspan="2" >推荐班型</td><td colspan="4">XXXXX</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">导出Word分析文档
+          <div class="demo-meta u-avoid-clicks">支持: doc, docx </div>
+        </button>
+        <div class="demo-box">
+          <div class="demo-controls">
+            <button class="demo-button" id="select-analysis-generate">点我导出数据</button>
+            <span class="demo-response is-selectable" id="selected-analysis-generate-file"></span>
+          </div>
+          <p>请您事先生成一个文件夹，本应用会将所有考生的分析文档写入到该文件夹。</p>
+          <div id = 'displayed-analysis-generate-file'> </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/analysis/analysis-generate');
+    </script>
+
+  </section>
+</template>

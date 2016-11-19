@@ -53,10 +53,12 @@
     "standard": "^6.0.8"
   },
   "dependencies": {
+    "docxtemplater": "^2.1.5",
     "electron-json-storage": "^2.0.0",
     "electron-shortcut-normalizer": "^1.0.0",
     "glob": "^6.0.4",
-    "highlight.js": "^9.3.0"
+    "highlight.js": "^9.3.0",
+    "xlsx": "^0.8.0"
   },
   "standard": {
     "env": {

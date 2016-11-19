@@ -1,0 +1,65 @@
+<template class="task-template">
+  <section id="sentence-import-section" class="section js-section u-category-communication">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-communication"></use></svg>
+          导入不同层次的话术
+        </h1>
+        <h3> 在本页面导入 <code>Excel</code> 格式（xls/xlsx）的不同层次的得分对应的话术</h3>
+
+        <p>需要给出本次考试中不同题型分数段对应的话术，以便生成每位考生的个性化分析结果。</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">Excel格式要求
+          <div class="demo-meta u-avoid-clicks">支持: xls, xlsx </div>
+        </button>
+        <div class="demo-box">
+          <p>这里给出对导入文件的格式示例，只有满足如下示例的Excel文件才能被本应用正确识别。</p>
+          <table class="table">
+            <tr>
+              <td>类型</td><td>正确率</td><td>对应话术</td>
+            </tr>
+            <tr>
+              <td>选择题</td><td>80~100</td><td>您的孩子选择题准确率很高</td>
+            </tr>
+            <tr>
+              <td>选择题</td><td>50~80</td><td>您的孩子选择题准确率较高</td>
+            </tr>
+            <tr>
+              <td>解答题</td><td>75~100</td><td>您的孩子解答题准确率较高</td>
+            </tr>
+            <tr>
+              <td>总体得分</td><td>85~100</td><td>您的孩子总体得分很高</td>
+            </tr>
+          </table>
+          <p> 注：凡是出现波浪号处，均使用英文波浪号(~)。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">导入Excel数据
+          <div class="demo-meta u-avoid-clicks">支持: xls, xlsx </div>
+        </button>
+        <div class="demo-box">
+          <div class="demo-controls">
+            <button class="demo-button" id="select-sentence-import">点我导入数据</button>
+            <span class="demo-response is-selectable" id="selected-sentence-import-file"></span>
+          </div>
+          <p>这里给出对导入文件的格式示例，只有满足如下示例的Excel文件才能被本应用正确识别。</p>
+          <div id = 'displayed-sentence-import-file'> </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/sentence/sentence-import');
+    </script>
+
+  </section>
+</template>

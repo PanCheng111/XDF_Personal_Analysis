@@ -1,0 +1,42 @@
+<template class="task-template">
+  <section id="analysis-query-section" class="section js-section u-category-native-ui">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-native-ui"></use></svg>
+          查询考生的个性化分析
+        </h1>
+        <h3> 在本页面查询某个考生个性化成绩分析单。</h3>
+
+        <p>根据以上导入的数据，分析出每位考生各自分析结果，并提供查询功能。</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">暂未开放此功能
+          <div class="demo-meta u-avoid-clicks">支持: xls, xlsx </div>
+        </button>
+        <div class="demo-box">
+          <!--<p>这里给出对导入文件的格式示例，只有满足如下示例的Excel文件才能被本应用正确识别。</p>
+          <table class="table">
+            <tr>
+              <td>题号</td><td>题目类型</td><td>分值</td><td>考察知识点</td>
+            </tr>
+            <tr>
+              <td>1</td><td>选择题</td><td>3</td><td>标量矢量</td>
+            </tr>
+            <tr>
+              <td>2</td><td>大题</td><td>10</td><td>力的分解</td>
+            </tr>
+          </table>-->
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/analysis/analysis-query');
+    </script>
+
+  </section>
+</template>

@@ -8,7 +8,7 @@ const app = electron.app
 
 const debug = /--debug/.test(process.argv[2])
 
-if (process.mas) app.setName('Electron APIs')
+if (process.mas) app.setName('新东方 学生个性化分析系统')
 
 var mainWindow = null
 
