@@ -3,6 +3,7 @@ const dialog = require('electron').dialog
 const storage = require('electron-json-storage')
 const XLSX = require('xlsx')
 var fs = require('fs')
+var base64 = require('base64-js')
 var Docxtemplater = require('docxtemplater')
 
 function calc_score(name, score_item, exam_data) {
@@ -99,98 +100,73 @@ function generate_files(dir, profiles) {
 
 }
 
-function calc_profile(directory) {
-    storage.get('exam-data', function(err, exam_data){
+function calc_practice(directory) {
+    storage.get('profile-data', function(err, profile_data){
         if (err) {
-            dialog.showErrorDialog('错误', '请您导入试题信息！');
+            console.log(err);
         }
         else {
-            storage.get('score-data', function(err, score_data) {
+            storage.get('subject-data', function(err, subject_data) {
                 if (err) {
-                    dialog.showErrorDialog('错误', '请您导入考生答题情况！');
+                    dialog.showErrorDialog('错误', '请您导入题库对应信息！');
                 }
                 else {
-                    storage.get('sentence-data', function(err, sentence_data) {
+                    storage.get('template-data', function(err, template_data) {
                         if (err) {
-                            dialog.showErrorDialog('错误', '请您导入总结话术！');
+                            dialog.showOpenDialog('错误', '请您导入题库模板信息！');
                         }
                         else {
-                            var profile = [];
-                            for (var i = 0; i < score_data.length; i++) {
-                                var name = score_data[i]['姓名'];
-                                var score = calc_score(name, score_data[i], exam_data);
-                                profile[i] = {};
-                                profile[i].name = name;
-                                profile[i].score = score.tot_score;
-                                profile[i].score_details = score;
-                                profile[i].errors = [];
-                            }
-                            var correct_ratio = [];
-                            var err_message = [];
-                            for (var i = 0; i < exam_data.length; i++) {
-                                var no = exam_data[i]['题号'];
-                                var sum = 0;
-                                for (var j = 0; j < score_data.length; j++) {
-                                    if (profile[j].score_details.detail[no] > 0.8 * profile[j].score_details.detail_max[no])
-                                        sum ++;
-                                }
-                                correct_ratio[no] = sum / score_data.length;
-                                err_message[no] = exam_data[i]['考察知识点'];
-                            }
-                            for (var i = 0; i < score_data.length; i++) {
-                                var score = profile[i].score_details;
-                                for (var j = 0; j < exam_data.length; j++) {
-                                    var no = exam_data[j]['题号'];
-                                    if (score.detail[no] <= 0.8 * score.detail_max[no]) {
-                                        profile[i].errors.push({
-                                            'err_no': no, 
-                                            'err_correct_ratio': correct_ratio[no],
-                                            'err_analysis': err_message[no],
-                                        });
+                            for (var i = 0; i < profile_data.length; i++) {
+                                var err_list = [];
+                                var errors = profile_data[i].errors;
+                                for (var j = 0; j < errors.length; j++) {
+                                    var err_no = errors[j].err_no;
+                                    var err_analysis = errors[j].err_analysis;
+                                    
+                                    for (var k = 0; k < subject_data.length; k++) {
+                                        if (subject_data[k]['知识点'] == err_analysis) {
+                                            var list = subject_data[k]['对应题库题目'].split(/,|，/).map(function(x) {return parseInt(x);});
+                                            //console.log(list);
+                                            err_list = err_list.concat(list);
+                                            break;
+                                        }
                                     }
                                 }
+                                var generate = {};
+                                for (var j = 0; j < err_list.length; j++) {
+                                    generate['no' + err_list[j].toString()] = {}
+                                }
+                                //console.log(err_list);
+                                //console.log(generate);
+                                var doc = new Docxtemplater(template_data);
+                                doc.setData(generate);
+                                doc.render();
+                                var buf = doc.getZip().generate({type: "nodebuffer"});
+                                fs.writeFileSync(directory + "/" + profile_data[i].name + "学员补充题.docx", buf);
                             }
-                            profile.sort(function(a, b) {
-                                if (a.score > b.score) return -1;
-                                if (a.score < b.score) return 1;
-                                return 0;
-                            })
-                            var score_avg = profile.reduce(function(pre, x) { return pre + x.score; }, 0) / profile.length;
-                            for (var i = 0; i < profile.length; i++) {
-                                if (i > 0 && profile[i].score == profile[i - 1].score)
-                                    profile[i].rank = profile[i - 1].rank;
-                                else profile[i].rank = i + 1;
-                                profile[i].score_drv = profile[i].score - score_avg;
-                                profile[i].score_max = profile[0].score;
-                            }
-                            calc_sentence(profile, sentence_data);
-                            generate_files(directory, profile);
-                            storage.set('profile-data', profile, function(err) {
-                                if (err) console.log(err);
-                            });
                             dialog.showMessageBox({
                                 type: 'info',
                                 buttons: ['知道了'],
                                 title: '保存成功',
-                                message: '所有的考生分析文档已经输出到指定目录下。',
+                                message: '所有的考生补充习题已经输出到指定目录下。',
                                 cancelId: 0,
                             });
                         }
-                    });
+                    })
                 }
             });
         }
     });
 }
 
-ipc.on('open-analysis-generate-dialog', function (event) {
+ipc.on('open-practice-generate-dialog', function (event) {
   dialog.showOpenDialog({
     properties: ['openDirectory']
   }, function (files) {
-    if (files) event.sender.send('selected-analysis-generate-directory', files);
+    if (files) event.sender.send('selected-practice-generate-directory', files);
     else return;
     var dir = files[0];
-    calc_profile(dir);
+    calc_practice(dir);
     // var workbook = XLSX.readFile(files[0]);
     // var sheet_name_list = workbook.SheetNames;
     // sheet_name_list.forEach(function(y) { /* iterate through sheets */
@@ -200,5 +176,20 @@ ipc.on('open-analysis-generate-dialog', function (event) {
     //       else event.sender.send('display-analysis-generate-directory');
     //   });
     // });
+  })
+})
+
+ipc.on('open-practice-generate-template-dialog', function (event) {
+  dialog.showOpenDialog({
+    properties: ['openFile']
+  }, function (files) {
+    if (files) event.sender.send('selected-practice-generate-template-directory', files);
+    else return;
+    var content = fs.readFileSync(files[0], "binary");
+    //var data = new Buffer(content).toString('base64');
+    //console.log(data);
+    storage.set('template-data', content, function(err) {
+        if (err) console.log(err);
+    });
   })
 })

@@ -1,0 +1,63 @@
+<template class="task-template">
+  <section id="practice-generate-section" class="section js-section u-category-media">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-media"></use></svg>
+          生成所有考生的错题补充练习
+        </h1>
+        <h3> 在本页面导出 <code>MS Word</code> 格式（docx）的考生个性化错题补充练习。</h3>
+
+        <p>根据以上导入的考试数据和学生得分情况，分析出每位考生各自个性化分析单，更精细准确找出学生存在的问题，并生成相应的补充练习。</p>
+      </div>
+    </header>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">Word格式样式
+          <div class="demo-meta u-avoid-clicks">支持: doc, docx </div>
+        </button>
+        <div class="demo-box">
+          <div class="demo-controls">
+            <button class="demo-button" id="select-practice-generate-template">点我导入数据</button>
+            <span class="demo-response is-selectable" id="selected-practice-generate-template-file"></span>
+          </div>
+          <p>本应用导入的word文档是如下格式：</p>
+          <code><pre>
+{#no1}
+这里是第一题。
+{/no1}
+{#no2}
+这里是第二题。
+{/no2}
+...
+{#noN}
+这里是第N题。
+{/noN}
+</pre></code>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="print-pdf-demo-toggle" class="js-container-target demo-toggle-button">导出Word补充练习
+          <div class="demo-meta u-avoid-clicks">支持: doc, docx </div>
+        </button>
+        <div class="demo-box">
+          <div class="demo-controls">
+            <button class="demo-button" id="select-practice-generate">点我导出数据</button>
+            <span class="demo-response is-selectable" id="selected-practice-generate-file"></span>
+          </div>
+          <p>请您事先生成一个文件夹，本应用会将所有考生的分析文档写入到该文件夹。</p>
+          <div id = 'displayed-practice-generate-file'> </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/practice/practice-generate');
+    </script>
+
+  </section>
+</template>
