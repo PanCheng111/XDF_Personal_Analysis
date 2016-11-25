@@ -38,6 +38,7 @@ ipc.on('display-exam-import-directory', function(event) {
 storage.get('exam-data', function(err, data) {
     if (err) console.log("fetch exam-data error!");
     else {
+        if (!(data instanceof Array)) return;
         var display = document.getElementById('displayed-exam-import-file');
         var content = "<p>您上次录入的数据如下：</p>";
         content += "<table class='table'>";

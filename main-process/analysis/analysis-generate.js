@@ -53,7 +53,7 @@ function calc_sentence(profiles, sentence_data) {
         var select_ratio = score.select_score / score.select_max * 100;
         var giant_ratio = score.giant_score / score.giant_max * 100;
         var whole_ratio = score.tot_score / (score.select_max + score.giant_max) * 100;
-        var select_sentence, giant_sentence, whole_sentence;
+        var select_sentence, giant_sentence, whole_sentence, solve_sentence;
         for (var j = 0; j < sentence_data.length; j++) {
             var range = sentence_data[j]['正确率'].split(/~/);
             if (sentence_data[j]['类型'] == '选择题') {
@@ -68,10 +68,15 @@ function calc_sentence(profiles, sentence_data) {
                 if (whole_ratio > range[0] && whole_ratio <= range[1]) 
                     whole_sentence = sentence_data[j]['对应话术'];
             }
+            if (sentence_data[j]['类型'] == '解决方案') {
+                if (whole_ratio > range[0] && whole_ratio <= range[1]) 
+                    solve_sentence = sentence_data[j]['对应话术'];
+            }
         }
         profiles[i].select_sentence = select_sentence;
         profiles[i].giant_sentence = giant_sentence;
         profiles[i].whole_sentence = whole_sentence;
+        profiles[i].solve_sentence = solve_sentence;
     }
 }
 
@@ -90,6 +95,7 @@ function generate_files(dir, profiles) {
             "select_sentence": profiles[i].select_sentence,
             "giant_sentence": profiles[i].giant_sentence,
             "whole_sentence": profiles[i].whole_sentence,
+            "solve_sentence": profiles[i].solve_sentence,
         });
         //apply them (replace all occurences of {first_name} by Hipp, ...)
         doc.render();

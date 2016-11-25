@@ -5,7 +5,7 @@ const storage = require('electron-json-storage')
 
 ipc.on('open-sentence-import-dialog', function (event) {
   dialog.showOpenDialog({
-    properties: ['openFile', 'openDirectory']
+    properties: ['openFile']
   }, function (files) {
     if (files) event.sender.send('selected-sentence-import-directory', files);
     else return;

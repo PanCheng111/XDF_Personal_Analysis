@@ -5,7 +5,7 @@ const storage = require('electron-json-storage')
 
 ipc.on('open-score-import-dialog', function (event) {
   dialog.showOpenDialog({
-    properties: ['openFile', 'openDirectory']
+    properties: ['openFile']
   }, function (files) {
     if (files) event.sender.send('selected-score-import-directory', files);
     else return;

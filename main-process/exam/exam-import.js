@@ -5,7 +5,7 @@ const XLSX = require('xlsx')
 
 ipc.on('open-exam-import-dialog', function (event) {
   dialog.showOpenDialog({
-    properties: ['openFile', 'openDirectory']
+    properties: ['openFile']
   }, function (files) {
     if (files) event.sender.send('selected-exam-import-directory', files);
     else return;

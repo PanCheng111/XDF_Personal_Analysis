@@ -38,6 +38,7 @@ ipc.on('display-score-import-directory', function(event) {
 storage.get('score-data', function(err, data) {
     if (err) console.log("fetch score-data error!");
     else {
+        if (!(data instanceof Array)) return;
         var display = document.getElementById('displayed-score-import-file');
         var content = "<p>您上次导入的数据如下：</p>";
         content += "<table class='table'>";

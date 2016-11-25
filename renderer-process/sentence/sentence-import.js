@@ -38,6 +38,7 @@ ipc.on('display-sentence-import-directory', function(event) {
 storage.get('sentence-data', function(err, data) {
     if (err) console.log("fetch sentence-data error!");
     else {
+        if (!(data instanceof Array)) return;
         var display = document.getElementById('displayed-sentence-import-file');
         var content = "<p>您上次录入的数据如下：</p>"
         content += "<table class='table'>";

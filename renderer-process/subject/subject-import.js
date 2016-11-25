@@ -38,6 +38,8 @@ ipc.on('display-subject-import-directory', function(event) {
 storage.get('subject-data', function(err, data) {
     if (err) console.log("fetch subject-data error!");
     else {
+        if (!(data instanceof Array)) return;
+        console.log("subject-data: ", data.toString());
         var display = document.getElementById('displayed-subject-import-file');
         var content = "<p>您上次导入的数据入下：</p>";
         content += "<table class='table'>";
