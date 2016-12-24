@@ -6,7 +6,14 @@ var fs = require('fs')
 var Docxtemplater = require('docxtemplater')
 
 function calc_score(name, score_item, exam_data) {
-    var arrError = score_item['选择题错题号'].split(/,|，/).map(function(x) { return parseInt(x); });
+    var arrError = [];
+    score_item['选择题错题号'] += "";
+    console.log('name=', name, 'score=', score_item['选择题错题号']);
+    if (score_item['选择题错题号']) {
+        if (score_item['选择题错题号'].indexOf(',') == -1 && score_item['选择题错题号'].indexOf('，') == -1)
+            arrError = [parseInt(score_item['选择题错题号'])];
+        else arrError = score_item['选择题错题号'].split(/,|，/).map(function(x) { return parseInt(x); });
+    }
     var score = {};
     score.tot_score = 0;
     score.select_score = 0;
@@ -39,7 +46,9 @@ function calc_score(name, score_item, exam_data) {
         if (key != '姓名' && key != '选择题错题号') {
             score.tot_score += score_item[key];
             score.giant_score += score_item[key];
-            var no = parseInt(key.split(/\(|（/)[0]);
+            var no = key;
+            key += "";
+            if (key.indexOf('(') != -1 || key.indexOf('（') != -1 ) no = parseInt(key.split(/\(|（/)[0]);
             if (!score.detail[no]) score.detail[no] = 0;
             score.detail[no] += score_item[key];
         }
@@ -90,7 +99,7 @@ function generate_files(dir, profiles) {
             "score": profiles[i].score,
             "rank": profiles[i].rank,
             "score_max": profiles[i].score_max,
-            "score_drv": profiles[i].score_drv,
+            "score_drv": profiles[i].score_drv.toFixed(1),
             "errors": profiles[i].errors,
             "select_sentence": profiles[i].select_sentence,
             "giant_sentence": profiles[i].giant_sentence,
@@ -108,22 +117,23 @@ function generate_files(dir, profiles) {
 function calc_profile(directory) {
     storage.get('exam-data', function(err, exam_data){
         if (err) {
-            dialog.showErrorDialog('错误', '请您导入试题信息！');
+            dialog.showErrorBox('错误', '请您导入试题信息！');
         }
         else {
             storage.get('score-data', function(err, score_data) {
                 if (err) {
-                    dialog.showErrorDialog('错误', '请您导入考生答题情况！');
+                    dialog.showErrorBox('错误', '请您导入考生答题情况！');
                 }
                 else {
                     storage.get('sentence-data', function(err, sentence_data) {
                         if (err) {
-                            dialog.showErrorDialog('错误', '请您导入总结话术！');
+                            dialog.showErrorBox('错误', '请您导入总结话术！');
                         }
                         else {
                             var profile = [];
                             for (var i = 0; i < score_data.length; i++) {
                                 var name = score_data[i]['姓名'];
+                                if (name == null) continue;
                                 var score = calc_score(name, score_data[i], exam_data);
                                 profile[i] = {};
                                 profile[i].name = name;

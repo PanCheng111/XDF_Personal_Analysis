@@ -7,7 +7,11 @@ var base64 = require('base64-js')
 var Docxtemplater = require('docxtemplater')
 
 function calc_score(name, score_item, exam_data) {
-    var arrError = score_item['选择题错题号'].split(/,|，/).map(function(x) { return parseInt(x); });
+    var arrError = [];
+    if (score_item['选择题错题号']) {
+        score_item['选择题错题号'] += "";
+        arrError = score_item['选择题错题号'].split(/,|，/).map(function(x) { return parseInt(x); });
+    }
     var score = {};
     score.tot_score = 0;
     score.select_score = 0;
@@ -125,7 +129,7 @@ function calc_practice(directory) {
                                     
                                     for (var k = 0; k < subject_data.length; k++) {
                                         if (subject_data[k]['知识点'] == err_analysis) {
-                                            var list = subject_data[k]['对应题库题目'].split(/,|，/).map(function(x) {return parseInt(x);});
+                                            var list = subject_data[k]['题库中对应题号'].split(/,|，/).map(function(x) {return parseInt(x);});
                                             //console.log(list);
                                             err_list = err_list.concat(list);
                                             break;
